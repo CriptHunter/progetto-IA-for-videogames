@@ -9,13 +9,19 @@ public class ChaseBehaviour : MonoBehaviour {
 	public Transform player;
 	public float resampleTime = 5f;
     private Coroutine c;
+    private NavMeshAgent agent;
+
+    private void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
 
     public void StartChasing()
     {
         c = StartCoroutine(GoChasing());
     }
 
-    public void StopChasing()
+    public void StopAtLastKnowPosition()
     {
         StopCoroutine(c);
     }
@@ -37,7 +43,7 @@ public class ChaseBehaviour : MonoBehaviour {
     {
         while (true)
         {
-            GetComponent<NavMeshAgent>().destination = player.position;
+            agent.destination = player.position;
             yield return new WaitForSeconds(resampleTime);
         }
     }

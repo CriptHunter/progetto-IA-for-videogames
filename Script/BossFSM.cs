@@ -6,8 +6,8 @@ public class BossFSM : MonoBehaviour {
     public Transform player;
 	private FSM fsm;
     public LayerMask playerMask;
-    public float listeningRange = 4;
-
+    public float listeningRange = 6;
+    public float attackRange = 3;
 
 	void Start ()
     {
@@ -20,27 +20,34 @@ public class BossFSM : MonoBehaviour {
         //ACTIONS
         lookAround.enterActions.Add(LookAround);
         patrol.enterActions.Add(Patrol);
+        patrol.exitActions.Add(StopPatrol);
         chase.enterActions.Add(Chase);
         chase.exitActions.Add(StopChase);
         attack.enterActions.Add(Attack);
         attack.stayActions.Add(Attack);
-
+    
         //TRANSITIONS
-        FSMTransition t1 = new FSMTransition(PlayerAround);
+        FSMTransition t1 = new FSMTransition(NothingAround);
         FSMTransition t2 = new FSMTransition(PlayerInSight);
         FSMTransition t3 = new FSMTransition(PlayerNotInSight);
+        FSMTransition t4 = new FSMTransition(PlayerInAttackRange);
+        FSMTransition t5 = new FSMTransition(PlayerNotInAttackRange);
+        FSMTransition t6 = new FSMTransition(PatrolingFinished);
+
 
         //LINK STATE - TRANSITION
         lookAround.AddTransition(t1, patrol);
         patrol.AddTransition(t2, chase);
+        patrol.AddTransition(t6, lookAround);
         chase.AddTransition(t3, lookAround);
+        chase.AddTransition(t4, attack);
+        attack.AddTransition(t5, chase);
 
         //INITIAL STATE
         fsm = new FSM(lookAround);
 		StartCoroutine(Run());
 	}
 
-	// Periodic update, run forever
 	public IEnumerator Run() {
 		while(true) {
 			fsm.Update();
@@ -51,7 +58,7 @@ public class BossFSM : MonoBehaviour {
     //CONDITION
     public bool PlayerAround()
     {
-        return true;
+        return false;
     }
 
     public bool NothingAround()
@@ -59,14 +66,20 @@ public class BossFSM : MonoBehaviour {
         return !PlayerAround();
     }
 
+    public bool PatrolingFinished()
+    {
+        return GetComponent<PatrolBehaviour>().patrolingFinished;
+    }
+
     public bool PlayerInSight()
     {
-        if (PlayerInListeningRange())
+        //se il giocatore è abbastanza vicino da essere sentito
+        if (PlayerInRange(listeningRange))
         {
             return true;
         }
 
-        //se il player non è abbastanza vicino da essere sentito prova a guardare
+        //se il giocatore è in linea di vista
         Vector3 ray = player.position - transform.position;
         RaycastHit hit;
         if (Physics.Raycast(transform.position, ray, out hit))
@@ -84,20 +97,14 @@ public class BossFSM : MonoBehaviour {
         return !PlayerInSight();
     }
 
-    //true se il giocatore è abbastanza vicino da essere sentito
-    //l'agente non deve per forza vederlo
-    public bool PlayerInListeningRange()
+    public bool PlayerInAttackRange()
     {
-        Vector3 ray = player.position - transform.position;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, ray, out hit, 4, playerMask))
-        {
-            if (hit.transform == player)
-            {
-                return true;
-            }
-        }
-        return false;
+        return PlayerInRange(attackRange);
+    }
+
+    public bool PlayerNotInAttackRange()
+    {
+        return !PlayerInAttackRange();
     }
 
     //ACTIONS
@@ -109,6 +116,12 @@ public class BossFSM : MonoBehaviour {
     public void Patrol()
     {
         print("patrol...");
+        GetComponent<PatrolBehaviour>().StartPatrol();
+    }
+
+    public void StopPatrol()
+    {
+        GetComponent<PatrolBehaviour>().StopPatrol();
     }
 
     public void Chase()
@@ -120,47 +133,28 @@ public class BossFSM : MonoBehaviour {
     public void StopChase()
     {
         print("stop chasing...");
-        GetComponent<ChaseBehaviour>().StopChasing();
+        GetComponent<ChaseBehaviour>().StopAtLastKnowPosition();
     }
 
     public void Attack()
     {
-        print("attack...");
+        print("attacking...");
     }
 
+    //UTILS
 
-/*
-	// CONDITIONS
-	public bool EnemiesAround() {
-		foreach (GameObject go in GameObject.FindGameObjectsWithTag(targetTag)) {
-			if ((go.transform.position - transform.position).magnitude <= range) return true;
-		}
-		return false;
-	}
-
-	public bool NoEnemiesAround() {
-		return !EnemiesAround();
-	}
-
-	// ACTIONS
-
-	public void StartAlarm () {
-		initialColor = ambientLight.color;
-		ringStart = Time.realtimeSinceStartup;
-	}
-
-	public void ShutAlarm() {
-		ambientLight.color = initialColor;
-	}
-
-	public void RingAlarm() {
-		if ((int)Mathf.Floor ((Time.realtimeSinceStartup - ringStart) / switchTime) % 2 == 0) {
-			ambientLight.color = color1;
-		} else {
-			ambientLight.color = color2;
-		}
-	}
-
-*/
-
+    //raycast con distanza solo sul layer del giocatore
+    public bool PlayerInRange(float range)
+    {
+        Vector3 ray = player.position - transform.position;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, ray, out hit, range, playerMask))
+        {
+            if (hit.transform == player)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

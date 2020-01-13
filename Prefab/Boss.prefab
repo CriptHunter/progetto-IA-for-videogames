@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 764148167076379058}
   - component: {fileID: 2751923624808038418}
   - component: {fileID: 6493616758167060443}
+  - component: {fileID: 3646090479348270367}
   - component: {fileID: 8168070147091819584}
   m_Layer: 0
   m_Name: Boss
@@ -130,7 +131,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798350431df7e2e4588ea0a47ce79183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  player: {fileID: 0}
+  resampleTime: 1.5
+--- !u!114 &3646090479348270367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764148167076379059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24ee5b1afa47d34999d5db4dbfa0837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolingPoint: []
+  patroling: 0
   resampleTime: 1.5
 --- !u!114 &8168070147091819584
 MonoBehaviour:
@@ -145,7 +161,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionTime: 1
-  targetTag: Player
+  player: {fileID: 0}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  listeningRange: 6
+  attackRange: 3
 --- !u!1 &1432962712253612099
 GameObject:
   m_ObjectHideFlags: 0
