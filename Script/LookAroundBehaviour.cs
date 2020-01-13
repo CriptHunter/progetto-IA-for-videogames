@@ -8,15 +8,22 @@ public class LookAroundBehaviour : MonoBehaviour
     public bool playerFound = false;
     public float resampleTime = 5f;
 
-    void Start()
+    public void StartLooking()
     {
-        
+        looking = true;
+        StartCoroutine(Wait());
     }
-    
-    private IEnumerator LookAround()
-    {
 
-        yield return new WaitForSeconds(resampleTime);
+    private void Update()
+    {
+        if (!looking)
+            return;
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2);
+        looking = false;
     }
 
 }

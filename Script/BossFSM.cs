@@ -9,8 +9,19 @@ public class BossFSM : MonoBehaviour {
     public float listeningRange = 6;
     public float attackRange = 3;
 
+    private LookAroundBehaviour lookB;
+    private PatrolBehaviour patrolB;
+    private ChaseBehaviour chaseB;
+    private ConeVision coneVision;
+
 	void Start ()
     {
+        //BEHAVIOUR
+        lookB = GetComponent<LookAroundBehaviour>();
+        patrolB = GetComponent<PatrolBehaviour>();
+        chaseB = GetComponent<ChaseBehaviour>();
+        coneVision = GetComponent<ConeVision>();
+
         //STATES
         FSMState lookAround = new FSMState();
         FSMState patrol = new FSMState();
@@ -58,17 +69,18 @@ public class BossFSM : MonoBehaviour {
     //CONDITION
     public bool PlayerAround()
     {
-        return false;
+        //se ha trovato il giocatore e non sta cercando
+        return lookB.playerFound && !lookB.looking;
     }
 
     public bool NothingAround()
     {
-        return !PlayerAround();
+        return !lookB.playerFound && !lookB.looking;
     }
 
     public bool PatrolingFinished()
     {
-        return GetComponent<PatrolBehaviour>().patrolingFinished;
+        return patrolB.patrolingFinished;
     }
 
     public bool PlayerInSight()
@@ -79,17 +91,7 @@ public class BossFSM : MonoBehaviour {
             return true;
         }
 
-        //se il giocatore è in linea di vista
-        Vector3 ray = player.position - transform.position;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, ray, out hit))
-        {
-            if (hit.transform == player)
-            {
-                return true;
-            }
-        }
-        return false;
+        return coneVision.Look();
     }
 
     public bool PlayerNotInSight()
@@ -111,29 +113,30 @@ public class BossFSM : MonoBehaviour {
     public void LookAround()
     {
         print("looking around...");
+        lookB.StartLooking();
     }
 
     public void Patrol()
     {
         print("patrol...");
-        GetComponent<PatrolBehaviour>().StartPatrol();
+        patrolB.StartPatrol();
     }
 
     public void StopPatrol()
     {
-        GetComponent<PatrolBehaviour>().StopPatrol();
+        patrolB.StopPatrol();
     }
 
     public void Chase()
     {
         print("chase...");
-        GetComponent<ChaseBehaviour>().StartChasing();
+        chaseB.StartChasing();
     }
 
     public void StopChase()
     {
         print("stop chasing...");
-        GetComponent<ChaseBehaviour>().StopAtLastKnowPosition();
+        chaseB.StopAtLastKnowPosition();
     }
 
     public void Attack()

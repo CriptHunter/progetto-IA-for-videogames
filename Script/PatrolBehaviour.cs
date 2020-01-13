@@ -35,6 +35,7 @@ public class PatrolBehaviour : MonoBehaviour
         agent.destination = patrolingPoint[index].transform.position;
 
         c = StartCoroutine(Patrol());
+        
     }
 
     public void StopPatrol()
