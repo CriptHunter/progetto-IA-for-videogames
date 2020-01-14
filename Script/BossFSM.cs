@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class BossFSM : MonoBehaviour {
 	public float reactionTime = 3f;
@@ -8,32 +9,41 @@ public class BossFSM : MonoBehaviour {
     public LayerMask playerMask;
     public float listeningRange = 6;
     public float attackRange = 3;
+    public TextMeshProUGUI fsmCurrentTxt;
 
     private LookAroundBehaviour lookB;
     private PatrolBehaviour patrolB;
     private ChaseBehaviour chaseB;
     private ConeVision coneVision;
+    private Velocity velocity;
 
 	void Start ()
     {
-        //BEHAVIOUR
+        //VARIABLES
         lookB = GetComponent<LookAroundBehaviour>();
         patrolB = GetComponent<PatrolBehaviour>();
         chaseB = GetComponent<ChaseBehaviour>();
         coneVision = GetComponent<ConeVision>();
+        fsmCurrentTxt = fsmCurrentTxt.GetComponent<TextMeshProUGUI>();
+        velocity = GetComponent<Velocity>();
 
         //STATES
         FSMState lookAround = new FSMState();
         FSMState patrol = new FSMState();
+        FSMState lastPosition = new FSMState();
         FSMState chase = new FSMState();
         FSMState attack = new FSMState();
 
         //ACTIONS
         lookAround.enterActions.Add(LookAround);
+
         patrol.enterActions.Add(Patrol);
         patrol.exitActions.Add(StopPatrol);
+
         chase.enterActions.Add(Chase);
         chase.exitActions.Add(StopChase);
+
+        lastPosition.enterActions.Add(LastPosition);
         attack.enterActions.Add(Attack);
         attack.stayActions.Add(Attack);
     
@@ -44,14 +54,22 @@ public class BossFSM : MonoBehaviour {
         FSMTransition t4 = new FSMTransition(PlayerInAttackRange);
         FSMTransition t5 = new FSMTransition(PlayerNotInAttackRange);
         FSMTransition t6 = new FSMTransition(PatrolingFinished);
+        FSMTransition t7 = new FSMTransition(NotMoving);
 
 
         //LINK STATE - TRANSITION
         lookAround.AddTransition(t1, patrol);
+        lookAround.AddTransition(t2, chase);
+
         patrol.AddTransition(t2, chase);
         patrol.AddTransition(t6, lookAround);
-        chase.AddTransition(t3, lookAround);
+
+        chase.AddTransition(t3, lastPosition);
         chase.AddTransition(t4, attack);
+
+        lastPosition.AddTransition(t7, lookAround);
+        lastPosition.AddTransition(t2, chase);
+
         attack.AddTransition(t5, chase);
 
         //INITIAL STATE
@@ -67,6 +85,12 @@ public class BossFSM : MonoBehaviour {
 	}
 
     //CONDITION
+    public bool NotMoving()
+    {
+        print(velocity.velocity);
+        return velocity.velocity == 0;
+    }
+
     public bool PlayerAround()
     {
         //se ha trovato il giocatore e non sta cercando
@@ -112,13 +136,23 @@ public class BossFSM : MonoBehaviour {
     //ACTIONS
     public void LookAround()
     {
-        print("looking around...");
+        fsmCurrentTxt.text = "Look around";
         lookB.StartLooking();
+    }
+
+    public void StopLooking()
+    {
+        lookB.StopLooking();
+    }
+
+    public void LastPosition()
+    {
+        fsmCurrentTxt.text = "Last position";
     }
 
     public void Patrol()
     {
-        print("patrol...");
+        fsmCurrentTxt.text = "Patrol";
         patrolB.StartPatrol();
     }
 
@@ -129,19 +163,18 @@ public class BossFSM : MonoBehaviour {
 
     public void Chase()
     {
-        print("chase...");
+        fsmCurrentTxt.text = "Chase";
         chaseB.StartChasing();
     }
 
     public void StopChase()
     {
-        print("stop chasing...");
         chaseB.StopAtLastKnowPosition();
     }
 
     public void Attack()
     {
-        print("attacking...");
+        fsmCurrentTxt.text = "Attack";
     }
 
     //UTILS

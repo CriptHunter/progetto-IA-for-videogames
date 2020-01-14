@@ -7,11 +7,18 @@ public class LookAroundBehaviour : MonoBehaviour
     public bool looking = false;
     public bool playerFound = false;
     public float resampleTime = 5f;
+    private float rightRotation = 60;
+    private float leftRotation = -60;
+
 
     public void StartLooking()
     {
-        looking = true;
-        StartCoroutine(Wait());
+
+    }
+
+    public void StopLooking()
+    {
+        looking = false;
     }
 
     private void Update()
@@ -24,6 +31,11 @@ public class LookAroundBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         looking = false;
+    }
+
+    public void LookRight()
+    {
+
     }
 
 }

@@ -16,8 +16,9 @@ GameObject:
   - component: {fileID: 6493616758167060443}
   - component: {fileID: 3646090479348270367}
   - component: {fileID: 2618526918287474500}
-  - component: {fileID: 8168070147091819584}
   - component: {fileID: 4623085699049885030}
+  - component: {fileID: 8534564072541091305}
+  - component: {fileID: 8168070147091819584}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -165,6 +166,34 @@ MonoBehaviour:
   looking: 0
   playerFound: 0
   resampleTime: 1.5
+--- !u!114 &4623085699049885030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764148167076379059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d00b6efc51e46945964aa129c7cbe70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fov: 120
+  distance: 20
+  player: {fileID: 0}
+--- !u!114 &8534564072541091305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764148167076379059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b989f1266075e1418ac04d41f258ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: 0
 --- !u!114 &8168070147091819584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,21 +213,7 @@ MonoBehaviour:
     m_Bits: 0
   listeningRange: 6
   attackRange: 3
---- !u!114 &4623085699049885030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 764148167076379059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d00b6efc51e46945964aa129c7cbe70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fov: 120
-  distance: 20
-  player: {fileID: 0}
+  fsmCurrentTxt: {fileID: 0}
 --- !u!1 &1432962712253612099
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,7 +47,7 @@ public class PatrolBehaviour : MonoBehaviour
     {
         while(true)
         {
-            if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= agent.stoppingDistance)
+            if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= 2)
             {
                 patrolingFinished = true;
                 print("finished patrol");
