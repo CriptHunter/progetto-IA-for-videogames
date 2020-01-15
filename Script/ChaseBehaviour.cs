@@ -26,18 +26,12 @@ public class ChaseBehaviour : MonoBehaviour {
         StopCoroutine(c);
     }
 
-	/*private IEnumerator GoChasing() {
-		while (true) {
-			Vector3 ray = player.position - transform.position;
-			RaycastHit hit;
-			if (Physics.Raycast (transform.position, ray, out hit)) {
-				if (hit.transform == player) {
-					GetComponent<NavMeshAgent> ().destination = player.position;
-				}
-			}
-			yield return new WaitForSeconds (resampleTime);
-		}
-	}*/
+    public void StopNow()
+    {
+        StopCoroutine(c);
+        agent.destination = transform.position;
+        print("stopping now");
+    }
 
     private IEnumerator GoChasing()
     {

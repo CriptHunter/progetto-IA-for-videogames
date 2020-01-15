@@ -36,14 +36,17 @@ public class BossFSM : MonoBehaviour {
 
         //ACTIONS
         lookAround.enterActions.Add(LookAround);
+        lookAround.exitActions.Add(lookB.StopLooking);
 
         patrol.enterActions.Add(Patrol);
-        patrol.exitActions.Add(StopPatrol);
+        patrol.exitActions.Add(patrolB.StopPatrol);
 
         chase.enterActions.Add(Chase);
-        chase.exitActions.Add(StopChase);
+        chase.exitActions.Add(chaseB.StopAtLastKnowPosition);
 
         lastPosition.enterActions.Add(LastPosition);
+
+        attack.enterActions.Add(chaseB.StopNow);
         attack.enterActions.Add(Attack);
         attack.stayActions.Add(Attack);
     
@@ -91,12 +94,7 @@ public class BossFSM : MonoBehaviour {
         return velocity.velocity == 0;
     }
 
-    public bool PlayerAround()
-    {
-        //se ha trovato il giocatore e non sta cercando
-        return lookB.playerFound && !lookB.looking;
-    }
-
+    //se ha finito di cercare e non ha visto il giocatore
     public bool NothingAround()
     {
         return !lookB.playerFound && !lookB.looking;
@@ -140,11 +138,6 @@ public class BossFSM : MonoBehaviour {
         lookB.StartLooking();
     }
 
-    public void StopLooking()
-    {
-        lookB.StopLooking();
-    }
-
     public void LastPosition()
     {
         fsmCurrentTxt.text = "Last position";
@@ -156,20 +149,10 @@ public class BossFSM : MonoBehaviour {
         patrolB.StartPatrol();
     }
 
-    public void StopPatrol()
-    {
-        patrolB.StopPatrol();
-    }
-
     public void Chase()
     {
         fsmCurrentTxt.text = "Chase";
         chaseB.StartChasing();
-    }
-
-    public void StopChase()
-    {
-        chaseB.StopAtLastKnowPosition();
     }
 
     public void Attack()

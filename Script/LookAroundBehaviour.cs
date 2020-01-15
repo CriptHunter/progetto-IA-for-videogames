@@ -6,36 +6,54 @@ public class LookAroundBehaviour : MonoBehaviour
 {
     public bool looking = false;
     public bool playerFound = false;
-    public float resampleTime = 5f;
-    private float rightRotation = 60;
-    private float leftRotation = -60;
+    public float rotationSpeed = 5;
+    private Coroutine c;
 
 
     public void StartLooking()
     {
-
+        looking = true;
+        c = StartCoroutine(Look(90));
     }
 
     public void StopLooking()
     {
         looking = false;
+        StopCoroutine(c);
     }
 
-    private void Update()
+    private IEnumerator Look(float rotationAmount)
     {
-        if (!looking)
-            return;
-    }
+        //guarda a destra
+        Quaternion finalRotation = Quaternion.Euler(0, rotationAmount, 0) * this.transform.rotation;
+        while (transform.rotation != finalRotation)
+        {
+            this.transform.rotation = Rotate(finalRotation, rotationSpeed);
+            yield return 0;
+        }
 
-    private IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(2);
+        //torna al centro
+        finalRotation = Quaternion.Euler(0, -rotationAmount, 0) * this.transform.rotation;
+        while (transform.rotation != finalRotation)
+        {
+            this.transform.rotation = Rotate(finalRotation, rotationSpeed);
+            yield return 0;
+        }
+
+        //guarda a sinistra
+        finalRotation = Quaternion.Euler(0, -rotationAmount, 0) * this.transform.rotation;
+        while (transform.rotation != finalRotation)
+        {
+            this.transform.rotation = Rotate(finalRotation, rotationSpeed);
+            yield return 0;
+        }
+
         looking = false;
     }
 
-    public void LookRight()
+    private Quaternion Rotate(Quaternion fRotation, float speed)
     {
-
+        return Quaternion.Lerp(this.transform.rotation, fRotation, Time.deltaTime * speed);
     }
 
 }
