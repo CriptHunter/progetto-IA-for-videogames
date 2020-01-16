@@ -7,7 +7,7 @@ public class Velocity : MonoBehaviour
     private Vector3 oldPos;
     private Vector3 newPos;
     private Vector3 velocityVector;
-    public float velocity;
+    private float velocity;
 
     void Start()
     {
@@ -22,5 +22,10 @@ public class Velocity : MonoBehaviour
         velocityVector = delta / Time.deltaTime;
         velocity = velocityVector.magnitude;
         oldPos = newPos;
+    }
+
+    public float GetVelocity()
+    {
+        return velocity;
     }
 }

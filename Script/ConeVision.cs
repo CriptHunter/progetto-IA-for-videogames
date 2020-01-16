@@ -5,9 +5,9 @@ using UnityEngine;
 public class ConeVision : MonoBehaviour
 {
 
-    public float fov = 120f;
-    public float distance = 20f;
-    public Transform player;
+    [SerializeField] private float fov = 120f;
+    [SerializeField] private float distance = 20f;
+    [SerializeField] private Transform player;
 
     public bool Look()
     {

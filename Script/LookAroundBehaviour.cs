@@ -6,9 +6,24 @@ public class LookAroundBehaviour : MonoBehaviour
 {
     public bool looking = false;
     public bool playerFound = false;
-    public float rotationSpeed = 5;
+    [SerializeField] private float rotationSpeed = 5;
     private Coroutine c;
+    private ConeVision coneVision;
 
+    private void Start()
+    {
+        coneVision = GetComponent<ConeVision>();
+    }
+
+    public void isLooking()
+    {
+
+    }
+
+    public void isPlayerFound()
+    {
+
+    }
 
     public void StartLooking()
     {
@@ -28,6 +43,7 @@ public class LookAroundBehaviour : MonoBehaviour
         Quaternion finalRotation = Quaternion.Euler(0, rotationAmount, 0) * this.transform.rotation;
         while (transform.rotation != finalRotation)
         {
+            playerFound = coneVision.Look();
             this.transform.rotation = Rotate(finalRotation, rotationSpeed);
             yield return 0;
         }
@@ -36,6 +52,7 @@ public class LookAroundBehaviour : MonoBehaviour
         finalRotation = Quaternion.Euler(0, -rotationAmount, 0) * this.transform.rotation;
         while (transform.rotation != finalRotation)
         {
+            playerFound = coneVision.Look();
             this.transform.rotation = Rotate(finalRotation, rotationSpeed);
             yield return 0;
         }
@@ -44,6 +61,7 @@ public class LookAroundBehaviour : MonoBehaviour
         finalRotation = Quaternion.Euler(0, -rotationAmount, 0) * this.transform.rotation;
         while (transform.rotation != finalRotation)
         {
+            playerFound = coneVision.Look();
             this.transform.rotation = Rotate(finalRotation, rotationSpeed);
             yield return 0;
         }

@@ -51,18 +51,19 @@ public class BossFSM : MonoBehaviour {
         attack.stayActions.Add(Attack);
     
         //TRANSITIONS
-        FSMTransition t1 = new FSMTransition(NothingAround);
+        FSMTransition t1 = new FSMTransition(PlayerHidden);
         FSMTransition t2 = new FSMTransition(PlayerInSight);
         FSMTransition t3 = new FSMTransition(PlayerNotInSight);
         FSMTransition t4 = new FSMTransition(PlayerInAttackRange);
         FSMTransition t5 = new FSMTransition(PlayerNotInAttackRange);
         FSMTransition t6 = new FSMTransition(PatrolingFinished);
         FSMTransition t7 = new FSMTransition(NotMoving);
+        FSMTransition t8 = new FSMTransition(PlayerNotHidden);
 
 
         //LINK STATE - TRANSITION
         lookAround.AddTransition(t1, patrol);
-        lookAround.AddTransition(t2, chase);
+        lookAround.AddTransition(t8, chase);
 
         patrol.AddTransition(t2, chase);
         patrol.AddTransition(t6, lookAround);
@@ -90,12 +91,17 @@ public class BossFSM : MonoBehaviour {
     //CONDITION
     public bool NotMoving()
     {
-        print(velocity.velocity);
-        return velocity.velocity == 0;
+        return velocity.GetVelocity() == 0;
+    }
+
+    //se mentre cerca vede il giocatore
+    public bool PlayerNotHidden()
+    {
+        return lookB.looking && lookB.playerFound;
     }
 
     //se ha finito di cercare e non ha visto il giocatore
-    public bool NothingAround()
+    public bool PlayerHidden()
     {
         return !lookB.playerFound && !lookB.looking;
     }

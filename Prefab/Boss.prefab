@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4623085699049885030}
   - component: {fileID: 8534564072541091305}
   - component: {fileID: 8168070147091819584}
+  - component: {fileID: 3943022240784127688}
   - component: {fileID: 8920543723130996746}
   m_Layer: 0
   m_Name: Boss
@@ -201,6 +202,18 @@ MonoBehaviour:
   listeningRange: 6
   attackRange: 2.5
   fsmCurrentTxt: {fileID: 0}
+--- !u!114 &3943022240784127688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764148167076379059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5034a4639df06f5488f1e70fab9a1e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &8920543723130996746
 CapsuleCollider:
   m_ObjectHideFlags: 0
