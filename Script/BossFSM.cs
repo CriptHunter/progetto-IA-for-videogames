@@ -3,13 +3,12 @@ using System.Collections;
 using TMPro;
 
 public class BossFSM : MonoBehaviour {
-	public float reactionTime = 3f;
-    public Transform player;
-	private FSM fsm;
-    public LayerMask playerMask;
-    public float listeningRange = 6;
-    public float attackRange = 3;
-    public TextMeshProUGUI fsmCurrentTxt;
+	public float reactionTime = 3f; //ogni quanti secondi la FSM si aggiorna
+    public Transform player; //player da inseguire
+	private FSM fsm; 
+    public float listeningRange = 6; //range entro il quale il player viene sentito anche senza essere visto
+    public float attackRange = 3; //range di attacco
+    public TextMeshProUGUI fsmCurrentTxt; //testo sulla UI con lo stato corrente della FSM
 
     private LookAroundBehaviour lookB;
     private PatrolBehaviour patrolB;
@@ -28,13 +27,17 @@ public class BossFSM : MonoBehaviour {
         velocity = GetComponent<Velocity>();
 
         //STATES
+        FSMState Start = new FSMState();
         FSMState lookAround = new FSMState();
         FSMState patrol = new FSMState();
         FSMState lastPosition = new FSMState();
         FSMState chase = new FSMState();
         FSMState attack = new FSMState();
 
+
         //ACTIONS
+        Start.enterActions.Add(StartAction);
+
         lookAround.enterActions.Add(LookAround);
         lookAround.exitActions.Add(lookB.StopLooking);
 
@@ -48,9 +51,9 @@ public class BossFSM : MonoBehaviour {
 
         attack.enterActions.Add(chaseB.StopNow);
         attack.enterActions.Add(Attack);
-        attack.stayActions.Add(Attack);
-    
+
         //TRANSITIONS
+        FSMTransition t0 = new FSMTransition(AlwaysTrue);
         FSMTransition t1 = new FSMTransition(PlayerHidden);
         FSMTransition t2 = new FSMTransition(PlayerInSight);
         FSMTransition t3 = new FSMTransition(PlayerNotInSight);
@@ -62,8 +65,11 @@ public class BossFSM : MonoBehaviour {
 
 
         //LINK STATE - TRANSITION
+        Start.AddTransition(t0, patrol);
+
         lookAround.AddTransition(t1, patrol);
         lookAround.AddTransition(t8, chase);
+        lookAround.AddTransition(t2, chase);
 
         patrol.AddTransition(t2, chase);
         patrol.AddTransition(t6, lookAround);
@@ -77,18 +83,24 @@ public class BossFSM : MonoBehaviour {
         attack.AddTransition(t5, chase);
 
         //INITIAL STATE
-        fsm = new FSM(lookAround);
+        fsm = new FSM(Start);
 		StartCoroutine(Run());
 	}
 
 	public IEnumerator Run() {
 		while(true) {
-			fsm.Update();
-			yield return new WaitForSeconds(reactionTime);
+            yield return new WaitForSeconds(reactionTime);
+            fsm.Update();
 		}
 	}
 
     //CONDITION
+    public bool AlwaysTrue()
+    {
+        return true;
+    }
+
+    //il boss è fermo
     public bool NotMoving()
     {
         return velocity.GetVelocity() == 0;
@@ -106,38 +118,51 @@ public class BossFSM : MonoBehaviour {
         return !lookB.playerFound && !lookB.looking;
     }
 
+    //se è arrivato con successo ad un punto di patrol
     public bool PatrolingFinished()
     {
         return patrolB.patrolingFinished;
     }
 
+    //se il giocatore viene visto o sentito
     public bool PlayerInSight()
     {
         //se il giocatore è abbastanza vicino da essere sentito
-        if (PlayerInRange(listeningRange))
-        {
+        if (coneVision.Listen(listeningRange))
             return true;
-        }
 
         return coneVision.Look();
     }
 
+    //se il giocatore non viene visto o sentito
     public bool PlayerNotInSight()
     {
         return !PlayerInSight();
     }
 
+    //se il giocatore è abbastanza vicino da essere attaccato
     public bool PlayerInAttackRange()
     {
-        return PlayerInRange(attackRange);
+        Vector3 ray = player.position - transform.position;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, ray, out hit, attackRange))
+            if (hit.transform == player)
+                return true;
+        return false;
     }
 
+    //se il giocatore è troppo lontano per essere attaccato
     public bool PlayerNotInAttackRange()
     {
         return !PlayerInAttackRange();
     }
 
     //ACTIONS
+    public void StartAction()
+    {
+        fsmCurrentTxt.text = "Start";
+    }
+
     public void LookAround()
     {
         fsmCurrentTxt.text = "Look around";
@@ -168,18 +193,5 @@ public class BossFSM : MonoBehaviour {
 
     //UTILS
 
-    //raycast con distanza solo sul layer del giocatore
-    public bool PlayerInRange(float range)
-    {
-        Vector3 ray = player.position - transform.position;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, ray, out hit, range, playerMask))
-        {
-            if (hit.transform == player)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }

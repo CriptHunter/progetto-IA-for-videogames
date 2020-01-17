@@ -14002,7 +14002,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -210.4, y: -62.1}
+  m_AnchoredPosition: {x: -210.39996, y: -62.100098}
   m_SizeDelta: {x: 353.5, y: 52.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2015084137
@@ -14776,7 +14776,7 @@ PrefabInstance:
     - target: {fileID: 8168070147091819584, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: listeningRange
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8168070147091819584, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
@@ -14791,7 +14791,7 @@ PrefabInstance:
     - target: {fileID: 8168070147091819584, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: reactionTime
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3646090479348270367, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
@@ -14841,12 +14841,17 @@ PrefabInstance:
     - target: {fileID: 4623085699049885030, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: distance
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4623085699049885030, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: fov
-      value: 160
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623085699049885030, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: playerMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 7151837368526856146, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
@@ -14863,6 +14868,16 @@ PrefabInstance:
       propertyPath: barImage
       value: 
       objectReference: {fileID: 1253585480}
+    - target: {fileID: 8387102728506872157, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f9bfe4f9762566a4c9cedd51a3af3fb2, type: 2}
+    - target: {fileID: 3963190221488271709, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43e3290122138144ca2ad6fac3bbfc1c, type: 3}
 --- !u!1001 &2810179249985247520

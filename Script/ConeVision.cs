@@ -8,6 +8,7 @@ public class ConeVision : MonoBehaviour
     [SerializeField] private float fov = 120f;
     [SerializeField] private float distance = 20f;
     [SerializeField] private Transform player;
+    [SerializeField] private LayerMask playerMask; //maschera con solo il layer player
 
     public bool Look()
     {
@@ -25,6 +26,21 @@ public class ConeVision : MonoBehaviour
             }
         }
 
+        return false;
+    }
+
+    public bool Listen(float range)
+    {
+        Vector3 ray = player.position - transform.position;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, ray, out hit, range, playerMask))
+        {
+            if (hit.transform == player)
+            {
+                print("player listened");
+                return true;
+            }
+        }
         return false;
     }
 
