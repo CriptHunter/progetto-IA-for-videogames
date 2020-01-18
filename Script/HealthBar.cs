@@ -23,6 +23,11 @@ public class HealthBar : MonoBehaviour
         print("vita:" + health);
     }
 
+    public int GetHealth()
+    {
+        return health;
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<LightBullet>() != null)

@@ -13,6 +13,7 @@ public class BossFSM : MonoBehaviour {
     private LookAroundBehaviour lookB;
     private PatrolBehaviour patrolB;
     private ChaseBehaviour chaseB;
+    private AttackBehaviour atkB;
     private ConeVision coneVision;
     private Velocity velocity;
 
@@ -22,6 +23,7 @@ public class BossFSM : MonoBehaviour {
         lookB = GetComponent<LookAroundBehaviour>();
         patrolB = GetComponent<PatrolBehaviour>();
         chaseB = GetComponent<ChaseBehaviour>();
+        atkB = GetComponent<AttackBehaviour>();
         coneVision = GetComponent<ConeVision>();
         fsmCurrentTxt = fsmCurrentTxt.GetComponent<TextMeshProUGUI>();
         velocity = GetComponent<Velocity>();
@@ -51,6 +53,7 @@ public class BossFSM : MonoBehaviour {
 
         attack.enterActions.Add(chaseB.StopNow);
         attack.enterActions.Add(Attack);
+        attack.exitActions.Add(atkB.StopAttacking);
 
         //TRANSITIONS
         FSMTransition t0 = new FSMTransition(AlwaysTrue);
@@ -109,13 +112,13 @@ public class BossFSM : MonoBehaviour {
     //se mentre cerca vede il giocatore
     public bool PlayerNotHidden()
     {
-        return lookB.looking && lookB.playerFound;
+        return lookB.isLooking() && lookB.isPlayerFound();
     }
 
     //se ha finito di cercare e non ha visto il giocatore
     public bool PlayerHidden()
     {
-        return !lookB.playerFound && !lookB.looking;
+        return !lookB.isPlayerFound() && !lookB.isLooking();
     }
 
     //se è arrivato con successo ad un punto di patrol
@@ -189,6 +192,7 @@ public class BossFSM : MonoBehaviour {
     public void Attack()
     {
         fsmCurrentTxt.text = "Attack";
+        atkB.StartAttacking();
     }
 
     //UTILS

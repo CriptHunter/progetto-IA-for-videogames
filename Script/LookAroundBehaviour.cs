@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LookAroundBehaviour : MonoBehaviour
 {
-    public bool looking = false;
-    public bool playerFound = false;
+    private bool looking = false;
+    private bool playerFound = false;
     [SerializeField] private float rotationSpeed = 5;
     private Coroutine c;
     private ConeVision coneVision;
@@ -15,14 +15,14 @@ public class LookAroundBehaviour : MonoBehaviour
         coneVision = GetComponent<ConeVision>();
     }
 
-    public void isLooking()
+    public bool isLooking()
     {
-
+        return looking;
     }
 
-    public void isPlayerFound()
+    public bool isPlayerFound()
     {
-
+        return playerFound;
     }
 
     public void StartLooking()
