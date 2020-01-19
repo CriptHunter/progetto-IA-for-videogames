@@ -124,7 +124,7 @@ public class BossFSM : MonoBehaviour {
     //se è arrivato con successo ad un punto di patrol
     public bool PatrolingFinished()
     {
-        return patrolB.patrolingFinished;
+        return patrolB.isPatrolingFinished();
     }
 
     //se il giocatore viene visto o sentito

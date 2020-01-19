@@ -5,9 +5,25 @@ using UnityEngine;
 public class AttackBehaviour : MonoBehaviour
 {
     private Coroutine c;
+    private CharacterController playerCtrl;
+    private bool pushing = false;
+    private bool attacking = false;
     [SerializeField] private Transform player;
     [SerializeField] private float atkSpeed = 2f;
 
+
+    void Start()
+    {
+        playerCtrl = player.gameObject.GetComponent<CharacterController>();
+    }
+
+    private void FixedUpdate()
+    {
+        if (attacking) //se è nello stato di attacco si gira sempre verso il giocatore
+            transform.LookAt(player);
+        if(pushing) //spinge il giocatore con un attacco
+            playerCtrl.Move((transform.forward.normalized + Vector3.up*3) * 10 * Time.fixedDeltaTime);
+    }
 
     public void StartAttacking()
     {
@@ -21,11 +37,18 @@ public class AttackBehaviour : MonoBehaviour
     
     private IEnumerator Attack(float atkSpeed)
     {
+        attacking = true;
         while (true)
         {
-            print("attacking!");
-            player.gameObject.GetComponent<CharacterController>().Move(transform.forward * 2);
+            StartCoroutine(Push());
             yield return new WaitForSeconds(atkSpeed);
         }
+    }
+
+    private IEnumerator Push()
+    {
+        pushing = true;
+        yield return new WaitForSeconds(0.3f);
+        pushing = false;
     }
 }

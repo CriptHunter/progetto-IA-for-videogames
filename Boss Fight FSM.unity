@@ -7919,6 +7919,10 @@ PrefabInstance:
       propertyPath: m_IsWalking
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      propertyPath: m_GravityMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8308790818999162293, guid: 5e9e851c0e142814dac026a256ba2ac0,
         type: 3}
       propertyPath: m_Enabled
@@ -14883,6 +14887,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2066691628}
+    - target: {fileID: 8580021330612406255, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: atkSpeed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43e3290122138144ca2ad6fac3bbfc1c, type: 3}
 --- !u!1001 &2810179249985247520

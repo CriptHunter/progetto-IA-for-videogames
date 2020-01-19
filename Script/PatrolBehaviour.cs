@@ -11,7 +11,7 @@ public class PatrolBehaviour : MonoBehaviour
     private NavMeshAgent agent;
     private int index;
     public List<GameObject> patrolingPoint;
-    public bool patrolingFinished;
+    private bool patrolingFinished;
     public float resampleTime = 5f;
     Coroutine c;
 
@@ -20,6 +20,11 @@ public class PatrolBehaviour : MonoBehaviour
         index = -1;
         patrolingFinished = false;
         agent = GetComponent<NavMeshAgent>();
+    }
+
+    public bool isPatrolingFinished()
+    {
+        return patrolingFinished;
     }
 
     public void StartPatrol()
@@ -34,8 +39,7 @@ public class PatrolBehaviour : MonoBehaviour
         patrolingFinished = false;
         agent.destination = patrolingPoint[index].transform.position;
 
-        c = StartCoroutine(Patrol());
-        
+        c = StartCoroutine(Patrol());       
     }
 
     public void StopPatrol()
