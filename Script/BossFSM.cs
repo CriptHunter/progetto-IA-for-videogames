@@ -16,6 +16,7 @@ public class BossFSM : MonoBehaviour {
     private AttackBehaviour atkB;
     private ConeVision coneVision;
     private Velocity velocity;
+    private HealthBar health;
 
 	void Start ()
     {
@@ -27,6 +28,7 @@ public class BossFSM : MonoBehaviour {
         coneVision = GetComponent<ConeVision>();
         fsmCurrentTxt = fsmCurrentTxt.GetComponent<TextMeshProUGUI>();
         velocity = GetComponent<Velocity>();
+        health = GetComponent<HealthBar>();
 
         //STATES
         FSMState Start = new FSMState();
@@ -65,6 +67,7 @@ public class BossFSM : MonoBehaviour {
         FSMTransition t6 = new FSMTransition(PatrolingFinished);
         FSMTransition t7 = new FSMTransition(NotMoving);
         FSMTransition t8 = new FSMTransition(PlayerNotHidden);
+        FSMTransition t9 = new FSMTransition(Damaged);
 
 
         //LINK STATE - TRANSITION
@@ -76,6 +79,7 @@ public class BossFSM : MonoBehaviour {
 
         patrol.AddTransition(t2, chase);
         patrol.AddTransition(t6, lookAround);
+        //patrol.AddTransition(t9, lastPosition);
 
         chase.AddTransition(t3, lastPosition);
         chase.AddTransition(t4, attack);
@@ -98,6 +102,11 @@ public class BossFSM : MonoBehaviour {
 	}
 
     //CONDITION
+    public bool Damaged()
+    {
+        return health.CheckDamage();
+    }
+
     public bool AlwaysTrue()
     {
         return true;
