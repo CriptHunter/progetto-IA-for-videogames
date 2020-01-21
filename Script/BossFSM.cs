@@ -60,15 +60,13 @@ public class BossFSM : MonoBehaviour {
         //TRANSITIONS
         FSMTransition t0 = new FSMTransition(AlwaysTrue);
         FSMTransition t1 = new FSMTransition(PlayerHidden);
-        FSMTransition t2 = new FSMTransition(PlayerInSight);
-        FSMTransition t3 = new FSMTransition(PlayerNotInSight);
+        FSMTransition t2 = new FSMTransition(PlayerDetected);
+        FSMTransition t3 = new FSMTransition(PlayerNotDetected);
         FSMTransition t4 = new FSMTransition(PlayerInAttackRange);
         FSMTransition t5 = new FSMTransition(PlayerNotInAttackRange);
         FSMTransition t6 = new FSMTransition(PatrolingFinished);
         FSMTransition t7 = new FSMTransition(NotMoving);
         FSMTransition t8 = new FSMTransition(PlayerNotHidden);
-        FSMTransition t9 = new FSMTransition(Damaged);
-
 
         //LINK STATE - TRANSITION
         Start.AddTransition(t0, patrol);
@@ -79,7 +77,6 @@ public class BossFSM : MonoBehaviour {
 
         patrol.AddTransition(t2, chase);
         patrol.AddTransition(t6, lookAround);
-        //patrol.AddTransition(t9, lastPosition);
 
         chase.AddTransition(t3, lastPosition);
         chase.AddTransition(t4, attack);
@@ -101,12 +98,6 @@ public class BossFSM : MonoBehaviour {
 		}
 	}
 
-    //CONDITION
-    public bool Damaged()
-    {
-        return health.CheckDamage();
-    }
-
     public bool AlwaysTrue()
     {
         return true;
@@ -118,16 +109,16 @@ public class BossFSM : MonoBehaviour {
         return velocity.GetVelocity() == 0;
     }
 
-    //se mentre cerca vede il giocatore
-    public bool PlayerNotHidden()
-    {
-        return lookB.isLooking() && lookB.isPlayerFound();
-    }
-
     //se ha finito di cercare e non ha visto il giocatore
     public bool PlayerHidden()
     {
         return !lookB.isPlayerFound() && !lookB.isLooking();
+    }
+
+    //se mentre cerca vede il giocatore
+    public bool PlayerNotHidden()
+    {
+        return lookB.isLooking() && lookB.isPlayerFound();
     }
 
     //se è arrivato con successo ad un punto di patrol
@@ -136,20 +127,19 @@ public class BossFSM : MonoBehaviour {
         return patrolB.isPatrolingFinished();
     }
 
-    //se il giocatore viene visto o sentito
-    public bool PlayerInSight()
+    //se il giocatore viene individuato:
+    // -perchè viene visto
+    // -perchè è abbastanza vicino da essere sentito
+    // -perché il boss viene colpito
+    public bool PlayerDetected()
     {
-        //se il giocatore è abbastanza vicino da essere sentito
-        if (coneVision.Listen(listeningRange))
-            return true;
-
-        return coneVision.Look();
+        return coneVision.Listen(listeningRange) || coneVision.Look() || health.CheckDamage();
     }
 
     //se il giocatore non viene visto o sentito
-    public bool PlayerNotInSight()
+    public bool PlayerNotDetected()
     {
-        return !PlayerInSight();
+        return !PlayerDetected();
     }
 
     //se il giocatore è abbastanza vicino da essere attaccato
@@ -203,8 +193,4 @@ public class BossFSM : MonoBehaviour {
         fsmCurrentTxt.text = "Attack";
         atkB.StartAttacking();
     }
-
-    //UTILS
-
-
 }
