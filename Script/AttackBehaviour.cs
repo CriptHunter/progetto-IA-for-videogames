@@ -22,7 +22,7 @@ public class AttackBehaviour : MonoBehaviour
         if (attacking) //se è nello stato di attacco si gira sempre verso il giocatore
             transform.LookAt(player);
         if(pushing) //spinge il giocatore con un attacco
-            playerCtrl.Move((transform.forward.normalized + Vector3.up*3) * 10 * Time.fixedDeltaTime);
+            playerCtrl.Move((transform.forward.normalized*10 + Vector3.up*15) * Time.fixedDeltaTime);
     }
 
     public void StartAttacking()

@@ -6,14 +6,16 @@ using UnityEngine.AI;
 
 public class ChaseBehaviour : MonoBehaviour {
 
-	public Transform player;
-	public float resampleTime = 5f;
+	[SerializeField] private Transform player;
+    [SerializeField] private float sinFrequency = 3;
     private Coroutine c;
     private NavMeshAgent agent;
+    private float baseSpeed;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        baseSpeed = agent.speed;
     }
 
     public void StartChasing()
@@ -30,6 +32,7 @@ public class ChaseBehaviour : MonoBehaviour {
     {
         StopCoroutine(c);
         agent.destination = transform.position;
+        agent.speed = baseSpeed;
         print("stopping now");
     }
 
@@ -37,8 +40,11 @@ public class ChaseBehaviour : MonoBehaviour {
     {
         while (true)
         {
-            agent.destination = player.position;
-            yield return new WaitForSeconds(resampleTime);
+            agent.speed = 5;
+            float sinOffset = Mathf.Sin(Time.time * sinFrequency) * Vector3.Distance(transform.position, player.position) / 2;
+            agent.destination = player.position + transform.right * sinOffset;
+            //agent.destination = player.position;
+            yield return new WaitForFixedUpdate();
         }
     }
 }
