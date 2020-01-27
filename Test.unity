@@ -747,7 +747,12 @@ PrefabInstance:
     - target: {fileID: 6493616758167060443, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: resampleTime
-      value: 0.01
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6493616758167060443, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: sinFrequency
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8168070147091819584, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
@@ -788,7 +793,7 @@ PrefabInstance:
         type: 3}
       propertyPath: barImage
       value: 
-      objectReference: {fileID: 1980238567}
+      objectReference: {fileID: 1226325568}
     - target: {fileID: 8580021330612406255, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: player
@@ -1225,18 +1230,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834416192}
   m_CullTransparentMesh: 0
---- !u!114 &1980238567 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2263222664061307237, guid: 1dd7d8289f20aab429e274c72d368892,
-    type: 3}
-  m_PrefabInstance: {fileID: 2006356620}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2006356620
 PrefabInstance:
   m_ObjectHideFlags: 0
