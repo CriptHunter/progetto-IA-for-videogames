@@ -11,6 +11,7 @@ public class PatrolBehaviour : MonoBehaviour
     private NavMeshAgent agent;
     private int index;
     public List<GameObject> patrolingPoint;
+    private int[] weights;
     private bool patrolingFinished;
     public float resampleTime = 5f;
     Coroutine c;
@@ -20,6 +21,8 @@ public class PatrolBehaviour : MonoBehaviour
         index = -1;
         patrolingFinished = false;
         agent = GetComponent<NavMeshAgent>();
+        weights = new int[patrolingPoint.Count];
+        InitWeights();
     }
 
     public bool isPatrolingFinished()
@@ -27,7 +30,7 @@ public class PatrolBehaviour : MonoBehaviour
         return patrolingFinished;
     }
 
-    public void StartPatrol()
+    /*public void StartPatrol()
     {
         if (patrolingPoint.Count == 0)
             return;
@@ -40,7 +43,28 @@ public class PatrolBehaviour : MonoBehaviour
         agent.destination = patrolingPoint[index].transform.position;
 
         c = StartCoroutine(Patrol());       
+    }*/
+
+    public void StartPatrol()
+    {
+        if (patrolingPoint.Count == 0)
+            return;
+
+        int sum = 0;
+        foreach (int e in weights) //sommo tutti i pesi
+            sum = sum + e;
+
+        if (sum == 0) //se la somma dei pesi fa zero significa che tutti i punti di patrol sono stati scelti 1 volta
+            InitWeights(); //rimetto le probabilità a 1
+
+        index = GetRandomWeightedIndex(weights); //scelgo random weighted un patrol point
+        weights[index] = 0; //metto a zero la probabilità di andarci ancora
+        patrolingFinished = false;
+        agent.destination = patrolingPoint[index].transform.position;
+        c = StartCoroutine(Patrol());
     }
+
+
 
     public void StopPatrol()
     {
@@ -58,5 +82,41 @@ public class PatrolBehaviour : MonoBehaviour
             }
             yield return new WaitForSeconds(resampleTime);
         }
+    }
+
+    public int GetRandomWeightedIndex(int[] weights)
+    {
+        // Get the total sum of all the weights.
+        int weightSum = 0;
+        for (int i = 0; i < weights.Length; ++i)
+        {
+            weightSum += weights[i];
+        }
+
+        // Step through all the possibilities, one by one, checking to see if each one is selected.
+        int index = 0;
+        int lastIndex = weights.Length - 1;
+        while (index < lastIndex)
+        {
+            // Do a probability check with a likelihood of weights[index] / weightSum.
+            if (Random.Range(0, weightSum) < weights[index])
+            {
+                return index;
+            }
+
+            // Remove the last item from the sum of total untested weights and try again.
+            weightSum -= weights[index++];
+        }
+
+        // No other item was selected, so return very last index.
+        return index;
+    }
+
+    private void InitWeights()
+    {
+       for(int k = 0; k < weights.Length; k++)
+       {
+            weights[k] = 1;
+       }
     }
 }

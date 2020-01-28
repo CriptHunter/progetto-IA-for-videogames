@@ -4,10 +4,13 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 
-public class ChaseBehaviour : MonoBehaviour {
-
+public class ChaseBehaviour : MonoBehaviour
+{
 	[SerializeField] private Transform player;
-    [SerializeField] private float sinFrequency = 3;
+    [SerializeField] private float frequency = 3;
+    [SerializeField] private float amplitude = 3;
+    [SerializeField] private float speed = 5;
+    [SerializeField] private bool nonLinearChase = false;
     private Coroutine c;
     private NavMeshAgent agent;
     private float baseSpeed;
@@ -40,10 +43,18 @@ public class ChaseBehaviour : MonoBehaviour {
     {
         while (true)
         {
-            agent.speed = 5;
-            float sinOffset = Mathf.Sin(Time.time * sinFrequency) * Vector3.Distance(transform.position, player.position) / 2;
-            agent.destination = player.position + transform.right * sinOffset;
-            //agent.destination = player.position;
+            if (nonLinearChase)
+            {
+                /*agent.speed = 5;
+                float sinOffset = Mathf.Sin(Time.time * sinFrequency) * Vector3.Distance(transform.position, player.position) / 2;
+                agent.destination = player.position + transform.right * sinOffset;*/
+
+                agent.speed = speed;
+                float sinOffset = Mathf.Sin(Time.time * frequency) * amplitude;
+                agent.destination = player.position + transform.right * sinOffset;
+            }
+            else
+                agent.destination = player.position;
             yield return new WaitForFixedUpdate();
         }
     }
