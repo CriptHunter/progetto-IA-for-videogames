@@ -10,7 +10,8 @@ public class ChaseBehaviour : MonoBehaviour
     [SerializeField] private float frequency = 3;
     [SerializeField] private float amplitude = 3;
     [SerializeField] private float speed = 5;
-    [SerializeField] private bool nonLinearChase = false;
+    [SerializeField] private float resampleTime = 2;
+
     private Coroutine c;
     private NavMeshAgent agent;
     private float baseSpeed;
@@ -43,18 +44,7 @@ public class ChaseBehaviour : MonoBehaviour
     {
         while (true)
         {
-            if (nonLinearChase)
-            {
-                /*agent.speed = 5;
-                float sinOffset = Mathf.Sin(Time.time * sinFrequency) * Vector3.Distance(transform.position, player.position) / 2;
-                agent.destination = player.position + transform.right * sinOffset;*/
-
-                agent.speed = speed;
-                float sinOffset = Mathf.Sin(Time.time * frequency) * amplitude;
-                agent.destination = player.position + transform.right * sinOffset;
-            }
-            else
-                agent.destination = player.position;
+            agent.destination = player.position;
             yield return new WaitForFixedUpdate();
         }
     }

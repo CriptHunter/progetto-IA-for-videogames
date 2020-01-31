@@ -47,6 +47,7 @@ public class PatrolBehaviour : MonoBehaviour
 
     public void StartPatrol()
     {
+        print("start patrol");
         if (patrolingPoint.Count == 0)
             return;
 
@@ -75,10 +76,17 @@ public class PatrolBehaviour : MonoBehaviour
     {
         while(true)
         {
-            if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= 2)
+
+            if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= 3)
             {
+                agent.destination = transform.position;
                 patrolingFinished = true;
                 print("finished patrol");
+            }
+            else
+            {
+                float sinOffset = Mathf.Sin(Time.time) * Vector3.Distance(transform.position, patrolingPoint[index].transform.position);
+                agent.destination = patrolingPoint[index].transform.position + transform.right * sinOffset;
             }
             yield return new WaitForSeconds(resampleTime);
         }
