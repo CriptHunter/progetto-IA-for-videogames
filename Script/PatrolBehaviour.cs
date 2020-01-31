@@ -10,11 +10,12 @@ public class PatrolBehaviour : MonoBehaviour
 {
     private NavMeshAgent agent;
     private int index;
-    public List<GameObject> patrolingPoint;
+    [SerializeField] private List<GameObject> patrolingPoint;
     private int[] weights;
     private bool patrolingFinished;
-    public float resampleTime = 5f;
-    Coroutine c;
+    [SerializeField] private float resampleTime = 5f;
+    private Coroutine c;
+    [SerializeField] private bool wavePatrol;
 
     void Start()
     {
@@ -83,9 +84,16 @@ public class PatrolBehaviour : MonoBehaviour
                 patrolingFinished = true;
                 print("finished patrol");
             }
+            else if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= 10)
+                agent.destination = patrolingPoint[index].transform.position;
             else
             {
-                float sinOffset = Mathf.Sin(Time.time) * Vector3.Distance(transform.position, patrolingPoint[index].transform.position);
+                float sinOffset;
+                if (wavePatrol)
+                    sinOffset = Mathf.Sin(Time.time) * Vector3.Distance(transform.position, patrolingPoint[index].transform.position);
+                else
+                    sinOffset = 0;
+
                 agent.destination = patrolingPoint[index].transform.position + transform.right * sinOffset;
             }
             yield return new WaitForSeconds(resampleTime);
