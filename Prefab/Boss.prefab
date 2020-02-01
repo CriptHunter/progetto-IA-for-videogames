@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 4623085699049885030}
   - component: {fileID: 8534564072541091305}
   - component: {fileID: 3943022240784127688}
+  - component: {fileID: 2088982535572195459}
   - component: {fileID: 8168070147091819584}
   m_Layer: 0
   m_Name: Boss
@@ -68,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6df92e53e97646147adb3ac116804a7c, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -153,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolingPoint: []
   resampleTime: 1.5
+  wavePatrol: 0
 --- !u!114 &2618526918287474500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  atkSpeed: 1
+  treeUpdateTime: 2
+  playerMeleeDistance: 2
 --- !u!114 &4623085699049885030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +226,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barImage: {fileID: 0}
+--- !u!114 &2088982535572195459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764148167076379059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95a7a40dd03d902449bc94e074586449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 10
+  lightMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &8168070147091819584
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -77,6 +77,7 @@ public class PatrolBehaviour : MonoBehaviour
     {
         while(true)
         {
+            print("agent speed: " + agent.speed);
 
             if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= 3)
             {

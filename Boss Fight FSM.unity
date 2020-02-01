@@ -11151,31 +11151,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3469406376195702373, guid: 1dd7d8289f20aab429e274c72d368892,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11279,6 +11254,31 @@ PrefabInstance:
     - target: {fileID: 3469406376195702373, guid: 1dd7d8289f20aab429e274c72d368892,
         type: 3}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245463659245140847, guid: 1dd7d8289f20aab429e274c72d368892,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 221975395871276315, guid: 1dd7d8289f20aab429e274c72d368892,
@@ -14677,21 +14677,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2751923624808038418, guid: 43e3290122138144ca2ad6fac3bbfc1c,
-        type: 3}
-      propertyPath: m_Speed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2751923624808038418, guid: 43e3290122138144ca2ad6fac3bbfc1c,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2751923624808038418, guid: 43e3290122138144ca2ad6fac3bbfc1c,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6493616758167060443, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: destination
@@ -14720,7 +14705,7 @@ PrefabInstance:
     - target: {fileID: 8168070147091819584, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: attackRange
-      value: 2.5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8168070147091819584, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
@@ -14772,6 +14757,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3646090479348270367, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: wavePatrol
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646090479348270367, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: resampleTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4623085699049885030, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: player
@@ -14792,31 +14787,11 @@ PrefabInstance:
       propertyPath: playerMask.m_Bits
       value: 256
       objectReference: {fileID: 0}
-    - target: {fileID: 7151837368526856146, guid: 43e3290122138144ca2ad6fac3bbfc1c,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2618526918287474500, guid: 43e3290122138144ca2ad6fac3bbfc1c,
-        type: 3}
-      propertyPath: rotationSpeed
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 3943022240784127688, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: barImage
       value: 
       objectReference: {fileID: 1253585480}
-    - target: {fileID: 8387102728506872157, guid: 43e3290122138144ca2ad6fac3bbfc1c,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: f9bfe4f9762566a4c9cedd51a3af3fb2, type: 2}
-    - target: {fileID: 3963190221488271709, guid: 43e3290122138144ca2ad6fac3bbfc1c,
-        type: 3}
-      propertyPath: m_BounceIntensity
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8580021330612406255, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
       propertyPath: player
@@ -14826,6 +14801,46 @@ PrefabInstance:
         type: 3}
       propertyPath: atkSpeed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580021330612406255, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: playerMeleeDistance
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2751923624808038418, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: m_Speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2751923624808038418, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2751923624808038418, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618526918287474500, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151837368526856146, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387102728506872157, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f9bfe4f9762566a4c9cedd51a3af3fb2, type: 2}
+    - target: {fileID: 3963190221488271709, guid: 43e3290122138144ca2ad6fac3bbfc1c,
+        type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5769221774357898148, guid: 43e3290122138144ca2ad6fac3bbfc1c,
         type: 3}
