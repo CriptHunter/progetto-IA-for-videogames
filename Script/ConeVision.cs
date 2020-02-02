@@ -12,13 +12,13 @@ public class ConeVision : MonoBehaviour
 
     public bool Look()
     {
-        if (Vector3.Distance(transform.position, player.position) < distance)
+        if (Vector3.Distance(transform.position, player.position) < distance) //if the player is in sight range
         {
-            Vector3 dirToPlayer = (player.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToPlayer) < fov/2)
+            Vector3 dirToPlayer = (player.position - transform.position).normalized; //ray from player to agent
+            if (Vector3.Angle(transform.forward, dirToPlayer) < fov/2) //if the player is inside the cone of vision
             {
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, dirToPlayer, out hit))
+                if (Physics.Raycast(transform.position, dirToPlayer, out hit)) //if the player is visible (not behind walls or obstacles)
                 {
                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                         return true;
@@ -29,7 +29,7 @@ public class ConeVision : MonoBehaviour
         return false;
     }
 
-    public bool Listen(float range)
+    public bool Listen(float range) //check if player is near, not considering walls or obstacles
     {
         Vector3 ray = player.position - transform.position;
         RaycastHit hit;

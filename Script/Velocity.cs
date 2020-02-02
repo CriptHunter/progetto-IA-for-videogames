@@ -19,7 +19,7 @@ public class Velocity : MonoBehaviour
     {
         newPos = transform.position;
         Vector3 delta = (newPos - oldPos);
-        velocityVector = delta / Time.deltaTime;
+        velocityVector = delta / Time.deltaTime; // Δs/Δt 
         velocity = velocityVector.magnitude;
         oldPos = newPos;
     }

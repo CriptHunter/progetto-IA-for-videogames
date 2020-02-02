@@ -3,12 +3,12 @@ using System.Collections;
 using TMPro;
 
 public class BossFSM : MonoBehaviour {
-	public float reactionTime = 3f; //ogni quanti secondi la FSM si aggiorna
-    public Transform player; //player da inseguire
+	public float reactionTime = 3f; //FSM update time
+    public Transform player;
 	private FSM fsm; 
-    public float listeningRange = 6; //range entro il quale il player viene sentito anche senza essere visto
-    public float attackRange = 3; //range di attacco
-    public TextMeshProUGUI fsmCurrentTxt; //testo sulla UI con lo stato corrente della FSM
+    public float listeningRange = 6; //range in which the player is located even without being seen
+    public float attackRange = 3;
+    public TextMeshProUGUI fsmCurrentTxt; //UI text displaying current FSM state
 
     private LookAroundBehaviour lookB;
     private PatrolBehaviour patrolB;
@@ -103,46 +103,40 @@ public class BossFSM : MonoBehaviour {
         return true;
     }
 
-    //il boss è fermo
-    public bool NotMoving()
+    public bool NotMoving() //the agent is not moving
     {
         return velocity.GetVelocity() == 0;
     }
 
-    //se ha finito di cercare e non ha visto il giocatore
-    public bool PlayerHidden()
+    public bool PlayerHidden() //if the agent finished searching and didn't find the player
     {
         return !lookB.isPlayerFound() && !lookB.isLooking();
     }
 
-    //se mentre cerca vede il giocatore
-    public bool PlayerNotHidden()
+    public bool PlayerNotHidden() //if the agent found the player while searching
     {
         return lookB.isLooking() && lookB.isPlayerFound();
     }
 
-    //se è arrivato con successo ad un punto di patrol
-    public bool PatrolingFinished()
+    public bool PatrolingFinished() //if the agent reached the target patrol point
     {
         return patrolB.isPatrolingFinished();
     }
 
-    //se il giocatore viene individuato:
-    // -perchè viene visto
-    // -perchè è abbastanza vicino da essere sentito
-    // -perché il boss viene colpito
+    //if the player is detected:
+    // -because it is seen
+    // -because it is in the listening range
+    // -because the agent is hit
     public bool PlayerDetected()
     {
         return coneVision.Listen(listeningRange) || coneVision.Look() || health.CheckDamage();
     }
 
-    //se il giocatore non viene visto o sentito
     public bool PlayerNotDetected()
     {
         return !PlayerDetected();
     }
 
-    //se il giocatore è abbastanza vicino da essere attaccato
     public bool PlayerInAttackRange()
     {
         Vector3 ray = player.position - transform.position;
@@ -153,7 +147,6 @@ public class BossFSM : MonoBehaviour {
         return false;
     }
 
-    //se il giocatore è troppo lontano per essere attaccato
     public bool PlayerNotInAttackRange()
     {
         return !PlayerInAttackRange();

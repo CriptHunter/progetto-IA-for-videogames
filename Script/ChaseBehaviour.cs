@@ -22,12 +22,12 @@ public class ChaseBehaviour : MonoBehaviour
         c = StartCoroutine(GoChasing());
     }
 
-    public void StopAtLastKnowPosition()
+    public void StopAtLastKnowPosition() //the agent stop at the last know player position
     {
         StopCoroutine(c);
     }
 
-    public void StopNow()
+    public void StopNow() //the agent stop at the next FSM cycle
     {
         StopCoroutine(c);
         agent.destination = transform.position;
@@ -38,7 +38,7 @@ public class ChaseBehaviour : MonoBehaviour
         while (true)
         {
             agent.destination = player.position;
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(resampleTime);
         }
     }
 }

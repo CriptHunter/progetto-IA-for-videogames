@@ -43,7 +43,7 @@ public class AttackBehaviour : MonoBehaviour
 
     void Update()
     {
-        if(attacking)
+        if(attacking) //if in attack states, agent looks at the player
             transform.LookAt(player.position);
     }
 
@@ -59,7 +59,7 @@ public class AttackBehaviour : MonoBehaviour
         {
             yield return new WaitForSeconds(treeUpdateTime);
         }
-        StartBT();
+        StartBT(); //restart again the tree
     }
 
     //CONDITIONS
@@ -100,7 +100,7 @@ public class AttackBehaviour : MonoBehaviour
         return true;
     }
 
-    private bool GetCloser()
+    private bool GetCloser() //agents reaches player position
     {
         GetComponent<NavMeshAgent>().destination = player.position;
         return true;

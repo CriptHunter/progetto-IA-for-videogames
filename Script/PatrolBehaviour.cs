@@ -31,21 +31,6 @@ public class PatrolBehaviour : MonoBehaviour
         return patrolingFinished;
     }
 
-    /*public void StartPatrol()
-    {
-        if (patrolingPoint.Count == 0)
-            return;
-
-        if (index >= patrolingPoint.Count -1)
-            index = -1;
-
-        index++;
-        patrolingFinished = false;
-        agent.destination = patrolingPoint[index].transform.position;
-
-        c = StartCoroutine(Patrol());       
-    }*/
-
     public void StartPatrol()
     {
         print("start patrol");
@@ -53,14 +38,14 @@ public class PatrolBehaviour : MonoBehaviour
             return;
 
         int sum = 0;
-        foreach (int e in weights) //sommo tutti i pesi
+        foreach (int e in weights) //sum of all weights
             sum = sum + e;
 
-        if (sum == 0) //se la somma dei pesi fa zero significa che tutti i punti di patrol sono stati scelti 1 volta
-            InitWeights(); //rimetto le probabilità a 1
+        if (sum == 0) //if the sum of the weights is zero, it means that all the patrol points have been chosen 1 time
+            InitWeights(); //sets all probability to 1
 
-        index = GetRandomWeightedIndex(weights); //scelgo random weighted un patrol point
-        weights[index] = 0; //metto a zero la probabilità di andarci ancora
+        index = GetRandomWeightedIndex(weights); //choose a patrol point
+        weights[index] = 0; //sets to 0 the probability of going there another time
         patrolingFinished = false;
         agent.destination = patrolingPoint[index].transform.position;
         c = StartCoroutine(Patrol());
@@ -77,15 +62,13 @@ public class PatrolBehaviour : MonoBehaviour
     {
         while(true)
         {
-            print("agent speed: " + agent.speed);
-
-            if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= 3)
+            if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= 3) //stops near patroling point
             {
                 agent.destination = transform.position;
                 patrolingFinished = true;
                 print("finished patrol");
             }
-            else if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= 10)
+            else if (Vector3.Distance(transform.position, patrolingPoint[index].transform.position) <= 10) //if close to patroling points the agent starts to walk straight
                 agent.destination = patrolingPoint[index].transform.position;
             else
             {

@@ -39,7 +39,7 @@ public class LookAroundBehaviour : MonoBehaviour
 
     private IEnumerator Look(float rotationAmount)
     {
-        //guarda a destra
+        //looks to the right
         Quaternion finalRotation = Quaternion.Euler(0, rotationAmount, 0) * this.transform.rotation;
         while (transform.rotation != finalRotation)
         {
@@ -48,7 +48,7 @@ public class LookAroundBehaviour : MonoBehaviour
             yield return 0;
         }
 
-        //torna al centro
+        //back looking forward
         finalRotation = Quaternion.Euler(0, -rotationAmount, 0) * this.transform.rotation;
         while (transform.rotation != finalRotation)
         {
@@ -57,7 +57,7 @@ public class LookAroundBehaviour : MonoBehaviour
             yield return 0;
         }
 
-        //guarda a sinistra
+        //look to the left
         finalRotation = Quaternion.Euler(0, -rotationAmount, 0) * this.transform.rotation;
         while (transform.rotation != finalRotation)
         {
