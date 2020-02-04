@@ -11,6 +11,7 @@ public class AttackBehaviour : MonoBehaviour
     private Coroutine c;
     private CharacterController playerCtrl;
     private bool attacking = false;
+    public bool blocking = false;
     [SerializeField] private Transform player;
     [SerializeField] private float treeUpdateTime = 2f;
     [SerializeField] private float playerMeleeDistance = 2f;
@@ -84,7 +85,15 @@ public class AttackBehaviour : MonoBehaviour
     private bool Block()
     {
         print("block");
+        StartCoroutine(Blocking());
         return true;
+    }
+
+    private IEnumerator Blocking()
+    {
+        blocking = true;
+        yield return new WaitForSeconds(1f);
+        blocking = false;
     }
 
     private bool MeleeAttack()
@@ -99,7 +108,7 @@ public class AttackBehaviour : MonoBehaviour
         return true;
     }
 
-    private bool GetCloser() //agents reaches player position
+    private bool GetCloser() //agent reaches player position
     {
         GetComponent<NavMeshAgent>().destination = player.position;
         return true;

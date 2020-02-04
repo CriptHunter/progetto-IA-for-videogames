@@ -8,7 +8,7 @@ public class ConeVision : MonoBehaviour
     [SerializeField] private float fov = 120f;
     [SerializeField] private float distance = 20f;
     [SerializeField] private Transform player;
-    [SerializeField] private LayerMask playerMask; //maschera con solo il layer player
+    [SerializeField] private LayerMask playerMask; //mask with only the layer player
 
     public bool Look()
     {

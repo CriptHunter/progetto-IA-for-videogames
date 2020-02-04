@@ -7,7 +7,7 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Image barImage;
     private int health = 100;
-    private bool damaged = false; //se il boss è stato colpito rispetto all'ultima volta che si è controllato
+    private bool damaged = false;
 
     public bool CheckDamage() //true if the agent was hit after the last check
     {
@@ -18,6 +18,12 @@ public class HealthBar : MonoBehaviour
 
     public void TakeDamage(int dmg) //decrease agent health
     {
+        if (GetComponent<AttackBehaviour>().blocking)
+        {
+            print("blocking...");
+            return;
+        }
+
         damaged = true;
         health = health - dmg;
         if (health <= 0)

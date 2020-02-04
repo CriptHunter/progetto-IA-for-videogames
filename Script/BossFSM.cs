@@ -124,9 +124,9 @@ public class BossFSM : MonoBehaviour {
     }
 
     //if the player is detected:
-    // -because it is seen
-    // -because it is in the listening range
-    // -because the agent is hit
+    // - because he is seen
+    // - because he is in the listening range
+    // - because the agent is hit
     public bool PlayerDetected()
     {
         return coneVision.Listen(listeningRange) || coneVision.Look() || health.CheckDamage();

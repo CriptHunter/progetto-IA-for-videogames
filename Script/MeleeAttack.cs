@@ -10,13 +10,13 @@ public class MeleeAttack : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R)) //charge attack
         {
             timer = 0;
             chargingAttack = true;
         }
 
-        else if (Input.GetKeyUp(KeyCode.R))
+        else if (Input.GetKeyUp(KeyCode.R)) //release attack
         {
             chargingAttack = false;
             if (timer >= 2)
