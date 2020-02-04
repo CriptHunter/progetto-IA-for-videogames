@@ -242,6 +242,9 @@ MonoBehaviour:
   lightMask:
     serializedVersion: 2
     m_Bits: 1024
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 33792
 --- !u!114 &8168070147091819584
 MonoBehaviour:
   m_ObjectHideFlags: 0
