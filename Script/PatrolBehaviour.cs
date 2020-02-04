@@ -33,7 +33,6 @@ public class PatrolBehaviour : MonoBehaviour
 
     public void StartPatrol()
     {
-        print("start patrol");
         if (patrolingPoint.Count == 0)
             return;
 
